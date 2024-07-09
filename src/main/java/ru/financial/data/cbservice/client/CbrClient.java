@@ -1,14 +1,13 @@
 package ru.financial.data.cbservice.client;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.cbr.web.DailyInfoSoap;
 import ru.cbr.web.DragMetDynamicResponse;
 import ru.financial.data.cbservice.config.CbConfig;
 
 import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.time.LocalDate;
@@ -17,18 +16,31 @@ import java.time.LocalDate;
 public class CbrClient extends BaseClient{
 
     public DailyInfoSoap wsClient;
-
     public CbrClient(CbConfig cbConfig){
         wsClient = createWSClient(DailyInfoSoap.class,
-                cbConfig.cbrWsdl,
-                cbConfig.cbrConnTmt,
-                cbConfig.cbrReadTmt,
+                cbConfig.getWsdl(),
+                cbConfig.getConnection(),
+                cbConfig.getRead(),
                 getCustomFeatures());
     }
-    public DragMetDynamicResponse.DragMetDynamicResult getDragMetDynamic(String fromDate, String toDate) throws DatatypeConfigurationException {
-        XMLGregorianCalendar frDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(LocalDate.parse(fromDate).toString());
-        XMLGregorianCalendar tDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(LocalDate.parse(toDate).toString());
-        DragMetDynamicResponse.DragMetDynamicResult dragMetDynamicResult = wsClient.dragMetDynamic(frDate, tDate);
+
+    private static XMLGregorianCalendar toXGC(LocalDate date) throws DatatypeConfigurationException {
+        XMLGregorianCalendar xmlGregorianCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar();
+
+        xmlGregorianCalendar.setYear(date.getYear());
+        xmlGregorianCalendar.setMonth(date.getMonthValue());
+        xmlGregorianCalendar.setDay(date.getDayOfMonth());
+        xmlGregorianCalendar.setTime(0,0,0);
+        xmlGregorianCalendar.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
+        return xmlGregorianCalendar;
+
+    }
+    public DragMetDynamicResponse.DragMetDynamicResult getDragMetDynamic(LocalDate fromDate, LocalDate toDate) throws DatatypeConfigurationException {
+
+        DragMetDynamicResponse.DragMetDynamicResult dragMetDynamicResult = wsClient.dragMetDynamic(
+                CbrClient.toXGC(fromDate),
+                CbrClient.toXGC(toDate)
+        );
         return dragMetDynamicResult;
     }
 

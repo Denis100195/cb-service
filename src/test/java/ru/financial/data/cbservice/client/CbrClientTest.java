@@ -7,8 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ru.cbr.web.DragMetDynamicResponse;
 
 import javax.xml.datatype.DatatypeConfigurationException;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.time.LocalDate;
 
 @SpringBootTest
 class CbrClientTest {
@@ -18,8 +17,10 @@ class CbrClientTest {
 
     @Test
     void test() throws DatatypeConfigurationException {
-        DragMetDynamicResponse.DragMetDynamicResult dragMetDynamic = cbrClient.getDragMetDynamic("2020-02-10", "2021-09-19");
-        System.out.println();
+        DragMetDynamicResponse.DragMetDynamicResult dragMetDynamic = cbrClient.getDragMetDynamic(
+                LocalDate.of(2020, 1, 11),
+                LocalDate.of(2020, 2, 12)
+        );
+        Assertions.assertNotNull(dragMetDynamic);
     }
-
 }

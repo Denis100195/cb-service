@@ -1,10 +1,11 @@
+spring.application.name: cb-service
+
 server:
   port : 8080
 
 cbr:
-  wsdl: "https://cbr.ru/DailyInfoWebServ/DailyInfo.asmx?WSDL"
-  timeout:
-    connection: 5000
-    read: 5000
+  wsdl: https://cbr.ru/DailyInfoWebServ/DailyInfo.asmx?WSDL
+  connection: 10000
+  read: 10000
 
 

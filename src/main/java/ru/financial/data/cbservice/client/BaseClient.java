@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class BaseClient {
+
     protected <T> T createWSClient(Class<T> portType,
                                    String url,
                                    int connectionTimeout,

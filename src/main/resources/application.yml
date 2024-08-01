@@ -1,7 +1,12 @@
 spring.application.name: cb-service
 
 server:
-  port : 8080
+  port : 8181
+
+  spring.datasource:
+    url: jdbc:postgresql://localhost:5432/cb-service
+    username: postgres
+    password: root
 
 cbr:
   wsdl: https://cbr.ru/DailyInfoWebServ/DailyInfo.asmx?WSDL

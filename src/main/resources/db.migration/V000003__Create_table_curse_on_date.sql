@@ -1,6 +1,6 @@
 CREATE TABLE curs_on_date
 (
-    id          BIGINT NOT NULL PRIMARY KEY,
+    id          BIGSERIAL NOT NULL PRIMARY KEY,
     date        DATE,
     name        VARCHAR(40),
     nom         DECIMAL,
@@ -8,4 +8,4 @@ CREATE TABLE curs_on_date
     code        INTEGER,
     ch_code     VARCHAR(3),
     unit_rate   NUMERIC(7, 4)
-)
+);

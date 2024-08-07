@@ -3,10 +3,15 @@ spring.application.name: cb-service
 server:
   port : 8181
 
-  spring.datasource:
-    url: jdbc:postgresql://localhost:5432/cb-service
-    username: postgres
-    password: root
+postgres:
+  hikari:
+    minimumIdle: 3
+    maximum-pool-size: 15
+    auto-commit: false
+    username: "postgres"
+    password: "root"
+    driver-class-name: org.postgresql.Driver
+    jdbc-url: jdbc:postgresql://localhost:5532/cb_db
 
 cbr:
   wsdl: https://cbr.ru/DailyInfoWebServ/DailyInfo.asmx?WSDL

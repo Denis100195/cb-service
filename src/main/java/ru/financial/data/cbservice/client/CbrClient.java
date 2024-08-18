@@ -60,5 +60,4 @@ public class CbrClient extends BaseClient{
         return ruoniaResult;
     }
 
-
 }

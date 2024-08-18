@@ -1,4 +1,4 @@
-package ru.financial.data.cbservice.dto;
+package ru.financial.data.cbservice.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +11,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RuoniaDTO {
-    private long id;
+public class Ruonia {
+
     private LocalDate date;
     private double ruonia;
     private double volume;

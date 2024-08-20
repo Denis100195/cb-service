@@ -12,9 +12,8 @@ import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
-
+/*Класс для получения методов для работы с ЦБ*/
 public abstract class BaseClient {
-
     protected <T> T createWSClient(Class<T> portType,
                                    String url,
                                    int connectionTimeout,
@@ -27,22 +26,16 @@ public abstract class BaseClient {
         for (Feature feature : features) {
             factory.getFeatures().add(feature);
         }
-
         T service = portType.cast(factory.create());
         ((BindingProvider) service).getRequestContext().put("javax.xml.ws.client.connectionTimeout", connectionTimeout);
         ((BindingProvider) service).getRequestContext().put("javax.xml.ws.client.receiveTimeout", readTimeout);
         ((BindingProvider) service).getRequestContext().put("com.sun.xml.internal.ws.request.timeout", readTimeout); // Timeout in millis
         ((BindingProvider) service).getRequestContext().put("com.sun.xml.internal.ws.connect.timeout", connectionTimeout);
-
-
         Client client = ClientProxy.getClient(service);
         ((ClientImpl) client).setSynchronousTimeout(readTimeout);
         setTimeouts(client, Duration.ofMillis(readTimeout));
-
-
         return service;
     }
-
     private void setTimeouts(Client client, Duration timeout) {
         HTTPConduit http = (HTTPConduit) client.getConduit();
         HTTPClientPolicy policy = new HTTPClientPolicy();
@@ -52,13 +45,11 @@ public abstract class BaseClient {
         policy.setAllowChunking(false);
         http.setClient(policy);
     }
-
     protected List<Feature> getCustomFeatures() {
         LoggingFeature loggingFeature = new LoggingFeature();
         loggingFeature.setPrettyLogging(true);
         loggingFeature.setVerbose(true);
         loggingFeature.setLogMultipart(true);
-
         return Collections.singletonList(loggingFeature);
     }
 }

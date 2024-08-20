@@ -10,7 +10,7 @@ import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.time.LocalDate;
-
+/*Клиент для сайта ЦБ*/
 @Service
 public class CbrClient extends BaseClient{
 

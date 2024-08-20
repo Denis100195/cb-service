@@ -10,7 +10,7 @@ import ru.financial.data.cbservice.service.parser.KeyRateParserService;
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.time.LocalDate;
 import java.util.List;
-
+/*Сервис для ключеовй ставки*/
 @Service
 public class KeyRateServiceImpl implements KeyRateService {
     private KeyRateRepository keyRateRepository;
@@ -19,6 +19,7 @@ public class KeyRateServiceImpl implements KeyRateService {
         this.keyRateRepository = keyRateRepository;
         this.keyRateParserService = keyRateParserService;
     }
+    /*Сохранение ключевой ставки в БД*/
     @Override
     public void saveKeyRate(LocalDate fromDate, LocalDate toDate) throws DatatypeConfigurationException {
         List<KeyRate> keyRateList = keyRateParserService.keyRateParse(fromDate, toDate);
@@ -26,10 +27,12 @@ public class KeyRateServiceImpl implements KeyRateService {
             keyRateRepository.insertKeyRate(keyRate);
         }
     }
+    /*Получение ключевой ставки на дату*/
     @Override
     public KeyRate getKeyRateOnDate(LocalDate date) {
         return keyRateRepository.findKeyRateOnDate(date);
     }
+    /*Получение ключевых ставок между датами*/
     @Override
     public List<KeyRate> getKeyRateBetweenDates(LocalDate fromDate, LocalDate toDate) {
         return keyRateRepository.findKeyRateBetweenDates(fromDate, toDate);
